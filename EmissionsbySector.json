@@ -1,0 +1,80 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Emissions by Sector over Time (1990-2019)",
+    "fontSize": 20,
+    "anchor": "start",
+    "color": "#333333"
+  },
+  "data": {"url": "https://raw.githubusercontent.com/ndem0003/datavis/main/ghg-emissions-by-sector.csv"},
+  "transform": [
+    {"filter": "datum.Year >= 1850"},
+    {
+      "aggregate": [
+        {"op": "sum", "field": "Agriculture", "as": "Agriculture"},
+        {"op": "sum", "field": "Land-use change and forestry", "as": "Land-use change and forestry"},
+        {"op": "sum", "field": "Waste", "as": "Waste"},
+        {"op": "sum", "field": "Industry", "as": "Industry"},
+        {"op": "sum", "field": "Manufacturing and construction", "as": "Manufacturing and construction"},
+        {"op": "sum", "field": "Transport", "as": "Transport"},
+        {"op": "sum", "field": "Electricity and heat", "as": "Electricity and heat"},
+        {"op": "sum", "field": "Buildings", "as": "Buildings"},
+        {"op": "sum", "field": "Fugitive emissions", "as": "Fugitive emissions"},
+        {"op": "sum", "field": "Other fuel combustion", "as": "Other fuel combustion"},
+        {"op": "sum", "field": "Aviation and shipping", "as": "Aviation and shipping"}
+      ],
+      "groupby": ["Year"]
+    },
+    {"fold": [
+      "Agriculture", "Land-use change and forestry", "Waste", "Industry",
+      "Manufacturing and construction", "Transport", "Electricity and heat",
+      "Buildings", "Fugitive emissions", "Other fuel combustion", "Aviation and shipping"
+    ]},
+    {
+      "window": [{"op": "sum", "field": "value", "as": "Total"}],
+      "frame": [null, null],
+      "groupby": ["Year"]
+    },
+    {
+      "calculate": "datum.value / datum.Total",
+      "as": "Emission (%)"
+    }
+  ],
+  "selection": {
+    "sector": {"type": "multi", "fields": ["key"], "bind": "legend"}
+  },
+  "mark": {"type": "area", "opacity": 0.7},
+  "encoding": {
+    "x": {"field": "Year", "type": "ordinal", "title": "Year"},
+    "y": {
+      "field": "Emission (%)",
+      "type": "quantitative",
+      "title": "Emission (%)",
+      "stack": "normalize",
+      "axis": {"format": "%"}
+    },
+    "color": {
+      "field": "key",
+      "type": "nominal",
+      "title": "Sector",
+      "scale": {"scheme": "tableau10"},
+      "legend": {
+        "symbolSize": 200,
+        "labelFontSize": 12,
+        "titleFontSize": 14,
+        "orient": "right"
+      }
+    },
+    "opacity": {
+      "condition": {"selection": "sector", "value": 1},
+      "value": 0.2
+    },
+    "tooltip": [
+      {"field": "Year", "type": "ordinal", "title": "Year"},
+      {"field": "key", "type": "nominal", "title": "Sector"},
+      {"field": "Emission (%)", "type": "quantitative", "title": "Emission (%)", "format": ".2%"}
+    ]
+  },
+  "view": {"continuousWidth": 400, "continuousHeight": 800},
+  "config": {"background": "white"}
+}

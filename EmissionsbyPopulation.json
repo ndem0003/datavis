@@ -1,0 +1,65 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": {
+      "text": "Bubble Chart of CO2 Emissions vs Population Density",
+      "fontSize": 20,
+      "anchor": "start",
+      "color": "#333333"
+    },
+    "width": 700,
+    "height": 700,
+    "data": {
+      "url": "https://raw.githubusercontent.com/ndem0003/datavis/main/cleaned_world_data_2023_reconciled.csv"
+    },
+    "params":[
+        {
+        "name": "continent_highlight",
+        "select": {"type": "point", "fields": ["Continent"]},
+        "bind": "legend"
+        }
+        ],
+    "mark": "circle",
+    "encoding": {
+      "x": {
+        "field": "Urban_Population",
+        "type": "quantitative",
+        "title": "Urban Population",
+        "axis": {"tickCount": 6, "grid": false},
+        "scale": {"type": "log", "base": 10, "zero": false, "domain": [1000, 1000000000]}
+      },
+      "y": {
+        "field": "Co2_Emissions",
+        "type": "quantitative",
+        "title": "Co2 Emissions",
+        "axis": {"tickCount": 6, "grid": false},
+        "scale": {"type": "log", "base": 10, "zero": false, "domain": [10, 10000000]}
+      },
+
+      "color": {
+        "field": "Continent",
+        "type": "nominal",
+        "title": "Continent"
+      },
+      "opacity": {
+        "condition": {"param": "continent_highlight", "value": 0.6},
+        "value": 0.2
+        },
+      "size": {
+        "field": "Population",
+        "type": "quantitative",
+        "title": "Population",
+        "scale": {
+            "type": "threshold",
+            "domain": [1000000, 10000000, 50000000, 100000000, 500000000],
+            "range": [15, 25, 50, 74, 100, 500]
+        },
+        "legend": {"format": ".1s"}
+    },
+    "tooltip": [
+        {"field": "Country", "type": "nominal"},
+        {"field": "Population", "type": "quantitative", "format": ","},
+        {"field": "Urban_Population", "type": "quantitative", "format": ","},
+        {"field": "Co2_Emissions", "type": "quantitative", "format": ","}
+        ]
+    }
+}

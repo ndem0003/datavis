@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>An Insight Into Air Pollution Across the Globe</title>
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2/build/pure-min.css"
+        integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ"
+        crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
+    <style type="text/css">
+        body {
+            font-family: 'Helvetica', serif;
+            padding: 20px;
+            background: #e8e8e8;
+        }
+        h1 {
+            color: #000024;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        p {
+            text-align: justify;
+            color: #535353;
+            font-size: 1.1em;
+            line-height: 1.6em;
+        }
+        .center {
+            width: 70%;
+            margin: 0 auto;
+        }
+        .vis-container {
+            width: 90%;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        .vis-container1 {
+            width: 90%;
+            height: 600px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        .flex-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            margin: 20px 0;
+        }
+        .small-font {
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+
+<body>
+    <div class = center>
+    <div class="page">
+        <h1>An Insight Into Air Pollution Across the Globe</h1>
+
+        <h2> By Nathan Demetriou (30610281)</h2>
+        <p>
+            CO2 Emissions pose one of the greatest threats to the planet Earth that we call home. Over the years, nations have produced
+            almost unquantifiable amounts of CO2 which can warm the planet, create holes in our Ozone Layer and cause other dangerous 
+            problems for the world in the long-term. 
+
+            Another formidable aspect of pollution is the persistent rise of CO<sub>2</sub> emissions. 
+            Carbon dioxide, a greenhouse gas, traps heat in our atmosphere, contributing to the overall warming of our planet. 
+            The repercussions of this are manifold, impacting our weather systems, sea levels, and biodiversity. 
+            The visualizations below provide a glimpse into the current state of CO<sub>2</sub> emissions worldwide, 
+            enabling a deeper understanding of which regions contribute most to this escalating issue.
+            
+            The goal of this report and the visualisations that come with it is to provide an insight into the trends and reasons as to why
+            the world is producing so much of these dangerous gases. Allowing for analysis to take place as to how these gases can be mitigated,
+            from a high level. 
+        </p>
+        <p>
+           
+        </p>
+        
+        <p>
+            The first visualisation present in this report is a world map, which illustrates the different levels Carob emissions by different nations
+            across the world. The legend indicates a scale, where the reader is able to analyse and compare different countries emission levels. Through this analysis,
+            we begin to understand who the main culprits are and being to compare different countries from around the world. 
+        </p>
+        
+        <div class="flex-container">
+            <div id="vis1" class="vis-container"></div>
+        </div>
+
+        <p>
+            Building from the previous visualisation, the second chart, which maps CO2 emissions against Population Density allows the reader to begin to understand some 
+            of the trends that are present in the production of CO2. Here, on the x-axis we have Urban Population, which indicates the amount of people who are living
+            in urban areas, like industrial cities in their respective countries. Furthermore, we can seperate the data by colour, based on the home continent and also 
+            illustrate size in terms of population. 
+
+            From analysing this chart, we can see a strong, positive correlation between CO2 emissions and Urban Population. 
+        </p>
+
+        <div class="flex-container">
+            <div id="vis2" class="vis-container"></div>
+        </div>
+
+        <p>
+             Visualisation 3 illustrates a select few countries, who tend to be quite high in the overall production of CO2 emissions and how they have increased their global emissions over the years. 
+             Making for an interesting comparison, we can see how the USA was the first country to really increase their emissions of Carbon Dioxide all the way back in the 1870s, in comparison to the 
+             rest of the world who really only started increasing their emissions at the start of the second world war. A nother interesting comparison is the sharp rise that China took to the top of 
+             the Emission rankings, placing them well above the next highest emittors, the USA, who has begun efforts to decrease their CO2 emissions after the turn of the century. 
+        </p>
+
+        <div class="flex-container">
+            <div id="vis3" class="vis-container"></div>
+        </div>
+
+        <p>
+            Visualisations 4 & 5 provide an insight into the actual breakdown of Carbon emissions across the world, and in visualisation 5's case, the country of Australia. 
+            We can see that there has not been much of a change since the start of the collection of data. However, this is a proportional lack of change, the actual change 
+            in size has grown rapidly from 1990 to now. In Australia, we can see that majority of the Emissions are due to Electricity and Heat, which is common across the rest of the world. 
+        </p>
+        
+        <div class="flex-container">
+            <div id="vis4" class="vis-container"></div> 
+            <div id="vis5" class="vis-container"></div>
+        </div>
+        <div class = center>
+        <p class="small-font">Created by Nathan Demetriou (30610281)</p>
+    </div>
+
+    
+
+    <script type="text/javascript">
+        var specVis1 = "./EmissionsMAP.json";
+        var specVis2 = "./EmissionsbyPopulation.json";
+        var specVis3 = "./EmissionsoverTime.json";
+        var specVis4 = "./EmissionsbySector.json";
+        var specVis5 = "./EmissionsbySectorAUS.json";
+
+        vegaEmbed('#vis1', specVis1, { "actions": false }).then(function (result) {
+        }).catch(console.error);
+
+        vegaEmbed('#vis2', specVis2, { "actions": false }).then(function (result) {
+        }).catch(console.error);
+
+        vegaEmbed('#vis3', specVis3, { "actions": false }).then(function (result) {
+        }).catch(console.error);
+
+        vegaEmbed('#vis4', specVis4, { "actions": false }).then(function (result) {  
+        }).catch(console.error);
+
+        vegaEmbed('#vis5', specVis5, { "actions": false }).then(function (result) {  
+        }).catch(console.error);
+    </script>
+</body>
+</html>

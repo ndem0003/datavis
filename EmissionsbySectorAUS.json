@@ -1,0 +1,64 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "An interactive pie chart showing the breakdown of CO2 emissions by sector in Australia for 2021.",
+  "title": {
+    "text": "Breakdown of CO2 Emissions by Sector in Australia (2021)",
+    "fontSize": 20,
+    "anchor": "start",
+    "color": "#333333"
+  },
+  "data": {"url": "https://raw.githubusercontent.com/ndem0003/datavis/main/ghg-emissions-by-sector.csv"},
+  "transform": [
+    {"filter": "datum.Entity == 'Australia' && datum.Year == 2019"},
+    {
+      "fold": [
+        "Agriculture", "Land-use change and forestry", "Waste", "Industry",
+        "Manufacturing and construction", "Transport", "Electricity and heat",
+        "Buildings", "Fugitive emissions", "Other fuel combustion", "Aviation and shipping"
+      ]
+    },
+    {
+      "window": [{"op": "sum", "field": "value", "as": "Total"}],
+      "frame": [null, null],
+      "groupby": ["Year"]
+    },
+    {
+      "calculate": "datum.value / datum.Total",
+      "as": "Emission (%)"
+    }
+  ],
+  "mark": {
+    "type": "arc",
+    "padAngle": 0.01,
+    "outerRadius": 150
+  },
+  "encoding": {
+    "theta": {"field": "Emission (%)", "type": "quantitative"},
+    "color": {
+      "field": "key",
+      "type": "nominal",
+      "title": "Sector",
+      "scale": {"scheme": "tableau10"},
+      "legend": {
+        "title": "Sectors",
+        "titleFontSize": 14,
+        "labelFontSize": 12,
+        "orient": "right",
+        "symbolSize": 200,
+        "offset": 75
+      }
+    },
+    "tooltip": [
+      {"field": "key", "type": "nominal", "title": "Sector"},
+      {"field": "Emission (%)", "type": "quantitative", "title": "Emission (%)", "format": ".2%"}
+    ]
+  },
+  "selection": {
+    "sector": {"type": "multi", "fields": ["key"], "bind": "legend"}
+  },
+  "view": {"continuousWidth": 400, "continuousHeight": 400},
+  "config": {
+    "background": "white",
+    "arc": {"stroke": "#fff"}
+  }
+}
